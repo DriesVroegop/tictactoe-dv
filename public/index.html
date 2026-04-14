@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Tic Tac Toe DV</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: #1a1a2e;
+      color: white;
+    }
+
+    .screen { display: none; flex-direction: column; align-items: center; justify-content: center; }
+    .screen.active { display: flex; }
+
+    /* ACCUEIL */
+    #screen-welcome h1 {
+      font-size: 52px;
+      color: #e94560;
+      letter-spacing: 4px;
+      margin-bottom: 12px;
+    }
+    #screen-welcome p {
+      font-size: 16px;
+      color: #aaa;
+      margin-bottom: 50px;
+    }
+
+    /* CHOIX DES NOMS */
+    #screen-names h2 {
+      font-size: 28px;
+      color: #e94560;
+      margin-bottom: 40px;
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+      width: 280px;
+    }
+    .input-group label {
+      font-size: 14px;
+      color: #aaa;
+      margin-bottom: 8px;
+    }
+    .input-group input {
+      padding: 12px 16px;
+      font-size: 16px;
+      background: #16213e;
+      border: 2px solid #0f3460;
+      border-radius: 8px;
+      color: white;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .input-group input:focus { border-color: #e94560; }
+
+    .btn {
+      padding: 14px 40px;
+      font-size: 18px;
+      background: #e94560;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 10px;
+    }
+    .btn:hover { background: #c73652; }
+    .btn-secondary {
+      background: transparent;
+      border: 2px solid #e94560;
+      color: #e94560;
+      padding: 10px 30px;
+      font-size: 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 12px;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { background: #e94560; color: white; }
+
+    /* JEU */
+    #screen-game h2 {
+      font-size: 28px;
+      color: #e94560;
+      margin-bottom: 16px;
+      letter-spacing: 2px;
+    }
+    #status {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #ccc;
+      min-height: 28px;
+    }
+    #game-container {
+      position: relative;
+      width: 376px;
+      height: 376px;
+    }
+    #board {
+      display: grid;
+      grid-template-columns: repeat(3, 120px);
+      grid-template-rows: repeat(3, 120px);
+      gap: 8px;
+    }
+    .cell {
+      background: #16213e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .cell:hover { background: #0f3460; }
+    .cell.x { color: #e94560; }
+    .cell.o { color: #ffffff; }
+    #win-line {
+      position: absolute;
+      top: 0; left: 0;
+      width: 376px; height: 376px;
+      pointer-events: none;
+    }
+
+    /* FIN */
+    #screen-end h2 {
+      font-size: 42px;
+      color: #e94560;
+      margin-bottom: 16px;
+    }
+    #result-text {
+      font-size: 26px;
+      margin-bottom: 50px;
+      color: white;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ACCUEIL -->
+  <div id="screen-welcome" class="screen active">
+    <h1>TIC TAC TOE DV</h1>
+    <p>Créé par Dries Vroegop</p>
+    <button class="btn" onclick="showScreen('screen-names')">Jouer</button>
+  </div>
+
+  <!-- CHOIX DES NOMS -->
+  <div id="screen-names" class="screen">
+    <h2>Choisissez vos noms</h2>
+    <div class="input-group">
+      <label>Joueur X (croix)</label>
+      <input type="text" id="name-x" placeholder="Entrez votre nom" maxlength="12"/>
+    </div>
+    <div class="input-group">
+      <label>Joueur O (ronds)</label>
+      <input type="text" id="name-o" placeholder="Entrez votre nom" maxlength="12"/>
+    </div>
+    <button class="btn" onclick="startGame()">Commencer la partie</button>
+    <button class="btn-secondary" onclick="showScreen('screen-welcome')">Retour</button>
+  </div>
+
+  <!-- JEU -->
+  <div id="screen-game" class="screen">
+    <h2>TIC TAC TOE DV</h2>
+    <div id="status">Connexion...</div>
+    <div id="game-container">
+      <div id="board"></div>
+      <svg id="win-line"></svg>
+    </div>
+  </div>
+
+  <!-- FIN -->
+  <div id="screen-end" class="screen">
+    <h2>Partie terminée</h2>
+    <div id="result-text"></div>
+    <button class="btn" onclick="rejouer()">Rejouer</button>
+    <button class="btn-secondary" onclick="showScreen('screen-names')">Changer les noms</button>
+    <button class="btn-secondary" onclick="showScreen('screen-welcome')">Accueil</button>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const boardEl = document.getElementById('board');
+    const statusEl = document.getElementById('status');
+    const winLine = document.getElementById('win-line');
+    const resultText = document.getElementById('result-text');
+
+    let playerX = 'Joueur X';
+    let playerO = 'Joueur O';
+
+    const lines = [
+      [0,1,2],[3,4,5],[6,7,8],
+      [0,3,6],[1,4,7],[2,5,8],
+      [0,4,8],[2,4,6]
+    ];
+
+    const cellCenters = [
+      [64,64],  [192,64],  [320,64],
+      [64,192], [192,192], [320,192],
+      [64,320], [192,320], [320,320]
+    ];
+
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function startGame() {
+      const nameX = document.getElementById('name-x').value.trim();
+      const nameO = document.getElementById('name-o').value.trim();
+      playerX = nameX || 'Joueur X';
+      playerO = nameO || 'Joueur O';
+      socket.emit('restart');
+      showScreen('screen-game');
+    }
+
+    function rejouer() {
+      socket.emit('restart');
+      showScreen('screen-game');
+    }
+
+    function drawWinLine(winningLine) {
+      const [a, c] = [winningLine[0], winningLine[2]];
+      const [x1, y1] = cellCenters[a];
+      const [x2, y2] = cellCenters[c];
+      winLine.innerHTML = `<line 
+        x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"
+        stroke="#e94560" stroke-width="6" stroke-linecap="round"
+        stroke-dasharray="400" stroke-dashoffset="400">
+        <animate attributeName="stroke-dashoffset" from="400" to="0" dur="0.4s" fill="freeze"/>
+      </line>`;
+    }
+
+    function findWinningLine(board) {
+      for (let line of lines) {
+        const [a, b, c] = line;
+        if (board[a] && board[a] === board[b] && board[a] === board[c]) return line;
+      }
+      return null;
+    }
+
+    socket.on('gameState', (state) => {
+      boardEl.innerHTML = '';
+      winLine.innerHTML = '';
+
+      state.board.forEach((cell, i) => {
+        const div = document.createElement('div');
+        div.className = 'cell' + (cell === 'X' ? ' x' : cell === 'O' ? ' o' : '');
+        div.textContent = cell;
+        div.onclick = () => socket.emit('play', i);
+        boardEl.appendChild(div);
+      });
+
+      if (state.winner === 'draw') {
+        setTimeout(() => {
+          resultText.textContent = "Match nul !";
+          showScreen('screen-end');
+        }, 300);
+      } else if (state.winner) {
+        const winningLine = findWinningLine(state.board);
+        if (winningLine) drawWinLine(winningLine);
+        setTimeout(() => {
+          const nomGagnant = state.winner === 'X' ? playerX : playerO;
+          resultText.textContent = `🎉 ${nomGagnant} a gagné !`;
+          showScreen('screen-end');
+        }, 800);
+      } else {
+        const nomJoueur = state.currentPlayer === 'X' ? playerX : playerO;
+        statusEl.textContent = `Tour de ${nomJoueur}`;
+      }
+    });
+  </script>
+</body>
+</html>
