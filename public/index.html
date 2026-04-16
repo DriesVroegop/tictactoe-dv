@@ -11,137 +11,59 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
-      background: green;
+      background: #1a1a2e;
       color: white;
     }
-
     .screen { display: none; flex-direction: column; align-items: center; justify-content: center; }
     .screen.active { display: flex; }
-
-    /* ACCUEIL */
-    #screen-welcome h1 {
-      font-size: 52px;
-      color: #e94560;
-      letter-spacing: 4px;
-      margin-bottom: 12px;
-    }
-    #screen-welcome p {
-      font-size: 16px;
-      color: #aaa;
-      margin-bottom: 50px;
-    }
-
-    /* CHOIX DES NOMS */
-    #screen-names h2 {
-      font-size: 28px;
-      color: #e94560;
-      margin-bottom: 40px;
-    }
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 20px;
-      width: 280px;
-    }
-    .input-group label {
-      font-size: 14px;
-      color: #aaa;
-      margin-bottom: 8px;
-    }
-    .input-group input {
-      padding: 12px 16px;
-      font-size: 16px;
-      background: #16213e;
-      border: 2px solid #0f3460;
-      border-radius: 8px;
-      color: white;
-      outline: none;
-      transition: border 0.2s;
-    }
-    .input-group input:focus { border-color: #e94560; }
-
+    #screen-welcome h1 { font-size: 52px; color: #e94560; letter-spacing: 4px; margin-bottom: 12px; }
+    #screen-welcome p { font-size: 16px; color: #aaa; margin-bottom: 50px; }
     .btn {
-      padding: 14px 40px;
-      font-size: 18px;
-      background: #e94560;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 0.2s;
-      margin-top: 10px;
+      padding: 14px 40px; font-size: 18px; background: #e94560;
+      color: white; border: none; border-radius: 10px; cursor: pointer;
+      transition: background 0.2s; margin: 8px;
     }
     .btn:hover { background: #c73652; }
     .btn-secondary {
-      background: transparent;
-      border: 2px solid #e94560;
-      color: #e94560;
-      padding: 10px 30px;
-      font-size: 15px;
-      border-radius: 10px;
-      cursor: pointer;
-      margin-top: 12px;
-      transition: all 0.2s;
+      background: transparent; border: 2px solid #e94560; color: #e94560;
+      padding: 10px 30px; font-size: 15px; border-radius: 10px;
+      cursor: pointer; margin: 8px; transition: all 0.2s;
     }
     .btn-secondary:hover { background: #e94560; color: white; }
-
-    /* JEU */
-    #screen-game h2 {
-      font-size: 28px;
-      color: #e94560;
-      margin-bottom: 16px;
-      letter-spacing: 2px;
+    .input-group { display: flex; flex-direction: column; margin-bottom: 20px; width: 280px; }
+    .input-group label { font-size: 14px; color: #aaa; margin-bottom: 8px; }
+    .input-group input {
+      padding: 12px 16px; font-size: 16px; background: #16213e;
+      border: 2px solid #0f3460; border-radius: 8px; color: white; outline: none;
     }
-    #status {
-      font-size: 18px;
-      margin-bottom: 20px;
-      color: #ccc;
-      min-height: 28px;
-    }
-    #game-container {
-      position: relative;
-      width: 376px;
-      height: 376px;
-    }
-    #board {
+    .input-group input:focus { border-color: #e94560; }
+    #screen-game h2, #screen-game-local h2 { font-size: 28px; color: #e94560; margin-bottom: 8px; }
+    #status, #status-local { font-size: 18px; margin-bottom: 8px; color: #ccc; min-height: 28px; text-align: center; }
+    #timer-display { font-size: 32px; font-weight: bold; color: #e94560; margin-bottom: 16px; min-height: 40px; }
+    #timer-display.urgent { color: #ff0000; }
+    .game-container { position: relative; width: 376px; height: 376px; }
+    .board {
       display: grid;
       grid-template-columns: repeat(3, 120px);
       grid-template-rows: repeat(3, 120px);
       gap: 8px;
     }
     .cell {
-      background: #16213e;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 60px;
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 8px;
-      transition: background 0.2s;
+      background: #16213e; display: flex; align-items: center;
+      justify-content: center; font-size: 60px; font-weight: bold;
+      cursor: pointer; border-radius: 8px; transition: background 0.2s;
     }
     .cell:hover { background: #0f3460; }
     .cell.x { color: #e94560; }
     .cell.o { color: #ffffff; }
-    #win-line {
-      position: absolute;
-      top: 0; left: 0;
-      width: 376px; height: 376px;
-      pointer-events: none;
+    .win-line { position: absolute; top: 0; left: 0; width: 376px; height: 376px; pointer-events: none; }
+    .symbol-badge {
+      font-size: 18px; background: #16213e; padding: 8px 20px;
+      border-radius: 8px; margin-bottom: 16px; color: #e94560;
     }
-
-    /* FIN */
-    #screen-end h2 {
-      font-size: 42px;
-      color: #e94560;
-      margin-bottom: 16px;
-    }
-    #result-text {
-      font-size: 26px;
-      margin-bottom: 50px;
-      color: white;
-      text-align: center;
-    }
+    #screen-end h2, #screen-end-local h2 { font-size: 42px; color: #e94560; margin-bottom: 16px; }
+    .result-text { font-size: 26px; margin-bottom: 30px; color: white; text-align: center; }
+    #opponent-status { font-size: 14px; color: #aaa; margin-top: 8px; min-height: 20px; }
   </style>
 </head>
 <body>
@@ -150,135 +72,292 @@
   <div id="screen-welcome" class="screen active">
     <h1>TIC TAC TOE DV</h1>
     <p>Créé par Dries Vroegop</p>
-    <button class="btn" onclick="showScreen('screen-names')">Jouer</button>
+    <button class="btn" onclick="showScreen('screen-mode')">Jouer</button>
   </div>
 
-  <!-- CHOIX DES NOMS -->
-  <div id="screen-names" class="screen">
-    <h2>Choisissez vos noms</h2>
-    <div class="input-group">
-      <label>Joueur X (croix)</label>
-      <input type="text" id="name-x" placeholder="Entrez votre nom" maxlength="12"/>
-    </div>
-    <div class="input-group">
-      <label>Joueur O (ronds)</label>
-      <input type="text" id="name-o" placeholder="Entrez votre nom" maxlength="12"/>
-    </div>
-    <button class="btn" onclick="startGame()">Commencer la partie</button>
+  <!-- CHOIX DU MODE -->
+  <div id="screen-mode" class="screen">
+    <h1 style="font-size:32px;color:#e94560;margin-bottom:40px;">Choisir le mode</h1>
+    <button class="btn" onclick="showScreen('screen-names-local')">2 joueurs — même écran</button>
+    <button class="btn" onclick="showScreen('screen-names-online')">Jouer en ligne</button>
     <button class="btn-secondary" onclick="showScreen('screen-welcome')">Retour</button>
   </div>
 
-  <!-- JEU -->
+  <!-- NOMS LOCAL -->
+  <div id="screen-names-local" class="screen">
+    <h2 style="color:#e94560;margin-bottom:30px;">Mode local</h2>
+    <div class="input-group"><label>Joueur X</label><input type="text" id="local-name-x" placeholder="Nom joueur X" maxlength="12"/></div>
+    <div class="input-group"><label>Joueur O</label><input type="text" id="local-name-o" placeholder="Nom joueur O" maxlength="12"/></div>
+    <button class="btn" onclick="launchLocal()">Commencer</button>
+    <button class="btn-secondary" onclick="showScreen('screen-mode')">Retour</button>
+  </div>
+
+  <!-- NOMS EN LIGNE -->
+  <div id="screen-names-online" class="screen">
+    <h2 style="color:#e94560;margin-bottom:30px;">Mode en ligne</h2>
+    <div class="input-group"><label>Votre nom</label><input type="text" id="online-name" placeholder="Entrez votre nom" maxlength="12"/></div>
+    <button class="btn" onclick="joinOnline()">Rejoindre une partie</button>
+    <button class="btn-secondary" onclick="showScreen('screen-mode')">Retour</button>
+  </div>
+
+  <!-- ATTENTE -->
+  <div id="screen-waiting" class="screen">
+    <h2 style="color:#e94560;margin-bottom:20px;">TIC TAC TOE DV</h2>
+    <div style="font-size:18px;color:#aaa;margin-bottom:20px;">En attente d'un adversaire...</div>
+    <div style="font-size:40px;margin:10px 0;">⏳</div>
+    <p style="color:#aaa;font-size:14px;text-align:center;margin-top:20px;">Partage ce lien :<br><strong style="color:white;">https://tictactoe-dv.onrender.com</strong></p>
+    <button class="btn-secondary" onclick="cancelWaiting()" style="margin-top:30px;">Annuler</button>
+  </div>
+
+  <!-- JEU EN LIGNE -->
   <div id="screen-game" class="screen">
     <h2>TIC TAC TOE DV</h2>
-    <div id="status">Connexion...</div>
-    <div id="game-container">
-      <div id="board"></div>
-      <svg id="win-line"></svg>
+    <div id="symbol-badge" class="symbol-badge"></div>
+    <div id="status"></div>
+    <div id="timer-display"></div>
+    <div class="game-container">
+      <div id="board" class="board"></div>
+      <svg id="win-line" class="win-line"></svg>
+    </div>
+    <div id="opponent-status"></div>
+  </div>
+
+  <!-- FIN EN LIGNE -->
+  <div id="screen-end" class="screen">
+    <h2>Partie terminée</h2>
+    <div id="result-text" class="result-text"></div>
+    <button class="btn" onclick="rematchSame()">Rejouer contre le même</button>
+    <button class="btn" onclick="rematchRandom()">Rejouer aléatoire</button>
+    <button class="btn-secondary" onclick="goMenu()">Menu</button>
+    <div id="rematch-status" style="font-size:14px;color:#aaa;margin-top:12px;min-height:20px;"></div>
+  </div>
+
+  <!-- JEU LOCAL -->
+  <div id="screen-game-local" class="screen">
+    <h2>TIC TAC TOE DV</h2>
+    <div id="status-local"></div>
+    <div class="game-container">
+      <div id="board-local" class="board"></div>
+      <svg id="win-line-local" class="win-line"></svg>
     </div>
   </div>
 
-  <!-- FIN -->
-  <div id="screen-end" class="screen">
+  <!-- FIN LOCAL -->
+  <div id="screen-end-local" class="screen">
     <h2>Partie terminée</h2>
-    <div id="result-text"></div>
-    <button class="btn" onclick="rejouer()">Rejouer</button>
-    <button class="btn-secondary" onclick="showScreen('screen-names')">Changer les noms</button>
-    <button class="btn-secondary" onclick="showScreen('screen-welcome')">Accueil</button>
+    <div id="result-text-local" class="result-text"></div>
+    <button class="btn" onclick="restartLocal()">Rejouer</button>
+    <button class="btn-secondary" onclick="showScreen('screen-mode')">Menu</button>
   </div>
 
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    const socket = io();
-    const boardEl = document.getElementById('board');
-    const statusEl = document.getElementById('status');
-    const winLine = document.getElementById('win-line');
-    const resultText = document.getElementById('result-text');
 
-    let playerX = 'Joueur X';
-    let playerO = 'Joueur O';
-
-    const lines = [
-      [0,1,2],[3,4,5],[6,7,8],
-      [0,3,6],[1,4,7],[2,5,8],
-      [0,4,8],[2,4,6]
-    ];
-
-    const cellCenters = [
-      [64,64],  [192,64],  [320,64],
-      [64,192], [192,192], [320,192],
-      [64,320], [192,320], [320,320]
-    ];
-
+    // ========== UTILITAIRES ==========
     function showScreen(id) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
 
-    function startGame() {
-      const nameX = document.getElementById('name-x').value.trim();
-      const nameO = document.getElementById('name-o').value.trim();
-      playerX = nameX || 'Joueur X';
-      playerO = nameO || 'Joueur O';
-      socket.emit('restart');
-      showScreen('screen-game');
+    const winLines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    const cellCenters = [
+      [64,64],[192,64],[320,64],
+      [64,192],[192,192],[320,192],
+      [64,320],[192,320],[320,320]
+    ];
+
+    function findWinningLine(board) {
+      for (let line of winLines) {
+        const [a,b,c] = line;
+        if (board[a] && board[a] === board[b] && board[a] === board[c]) return line;
+      }
+      return null;
     }
 
-    function rejouer() {
-      socket.emit('restart');
-      showScreen('screen-game');
-    }
-
-    function drawWinLine(winningLine) {
-      const [a, c] = [winningLine[0], winningLine[2]];
-      const [x1, y1] = cellCenters[a];
-      const [x2, y2] = cellCenters[c];
-      winLine.innerHTML = `<line 
-        x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"
+    function drawWinLine(svgEl, winningLine) {
+      const [a,c] = [winningLine[0], winningLine[2]];
+      const [x1,y1] = cellCenters[a];
+      const [x2,y2] = cellCenters[c];
+      svgEl.innerHTML = `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"
         stroke="#e94560" stroke-width="6" stroke-linecap="round"
         stroke-dasharray="400" stroke-dashoffset="400">
         <animate attributeName="stroke-dashoffset" from="400" to="0" dur="0.4s" fill="freeze"/>
       </line>`;
     }
 
-    function findWinningLine(board) {
-      for (let line of lines) {
-        const [a, b, c] = line;
-        if (board[a] && board[a] === board[b] && board[a] === board[c]) return line;
+    // ========== MODE LOCAL (100% hors ligne) ==========
+    let localBoard = ['','','','','','','','',''];
+    let localCurrent = 'X';
+    let localWinner = null;
+    let localNameX = 'Joueur X';
+    let localNameO = 'Joueur O';
+
+    function launchLocal() {
+      localNameX = document.getElementById('local-name-x').value.trim() || 'Joueur X';
+      localNameO = document.getElementById('local-name-o').value.trim() || 'Joueur O';
+      localBoard = ['','','','','','','','',''];
+      localCurrent = 'X';
+      localWinner = null;
+      renderLocal();
+      showScreen('screen-game-local');
+    }
+
+    function restartLocal() {
+      localBoard = ['','','','','','','','',''];
+      localCurrent = 'X';
+      localWinner = null;
+      renderLocal();
+      showScreen('screen-game-local');
+    }
+
+    function renderLocal() {
+      const boardEl = document.getElementById('board-local');
+      const statusEl = document.getElementById('status-local');
+      const winLineEl = document.getElementById('win-line-local');
+      boardEl.innerHTML = '';
+      winLineEl.innerHTML = '';
+
+      localBoard.forEach((cell, i) => {
+        const div = document.createElement('div');
+        div.className = 'cell' + (cell === 'X' ? ' x' : cell === 'O' ? ' o' : '');
+        div.textContent = cell;
+        div.onclick = () => {
+          if (localWinner || cell !== '') return;
+          localBoard[i] = localCurrent;
+          localWinner = checkLocalWinner();
+          localCurrent = localCurrent === 'X' ? 'O' : 'X';
+          renderLocal();
+          if (localWinner) {
+            setTimeout(() => {
+              const rt = document.getElementById('result-text-local');
+              if (localWinner === 'draw') rt.textContent = 'Match nul !';
+              else rt.textContent = `${localWinner === 'X' ? localNameX : localNameO} a gagné !`;
+              showScreen('screen-end-local');
+            }, 800);
+          }
+        };
+        boardEl.appendChild(div);
+      });
+
+      if (localWinner) {
+        const wl = findWinningLine(localBoard);
+        if (wl) drawWinLine(winLineEl, wl);
+        statusEl.textContent = '';
+      } else {
+        statusEl.textContent = `Tour de ${localCurrent === 'X' ? localNameX : localNameO}`;
       }
+    }
+
+    function checkLocalWinner() {
+      for (let [a,b,c] of winLines) {
+        if (localBoard[a] && localBoard[a] === localBoard[b] && localBoard[a] === localBoard[c]) return localBoard[a];
+      }
+      if (localBoard.every(c => c !== '')) return 'draw';
       return null;
     }
 
+    // ========== MODE EN LIGNE ==========
+    const socket = io();
+    let mySymbol = null;
+    let myName = '';
+
+    function joinOnline() {
+      myName = document.getElementById('online-name').value.trim() || 'Joueur';
+      socket.emit('joinOnline');
+      showScreen('screen-waiting');
+    }
+
+    function cancelWaiting() {
+      socket.emit('cancelWaiting');
+      showScreen('screen-mode');
+    }
+
+    function goMenu() {
+      socket.emit('cancelWaiting');
+      mySymbol = null;
+      showScreen('screen-mode');
+    }
+
+    function rematchSame() {
+      document.getElementById('rematch-status').textContent = "En attente de l'adversaire...";
+      socket.emit('rematchSame');
+    }
+
+    function rematchRandom() {
+      showScreen('screen-waiting');
+      socket.emit('rematchRandom');
+    }
+
+    socket.on('waiting', () => showScreen('screen-waiting'));
+
+    socket.on('gameStart', (data) => {
+      mySymbol = data.symbol;
+      document.getElementById('symbol-badge').textContent = `Tu joues : ${mySymbol === 'X' ? '✕' : '○'}`;
+      document.getElementById('timer-display').textContent = '';
+      document.getElementById('opponent-status').textContent = '';
+      document.getElementById('rematch-status').textContent = '';
+      showScreen('screen-game');
+    });
+
+    socket.on('timer', (timeLeft) => {
+      const td = document.getElementById('timer-display');
+      td.textContent = timeLeft > 0 ? `⏱ ${timeLeft}s` : '';
+      td.className = timeLeft <= 3 ? 'urgent' : '';
+    });
+
     socket.on('gameState', (state) => {
+      const boardEl = document.getElementById('board');
+      const winLineEl = document.getElementById('win-line');
+      const statusEl = document.getElementById('status');
       boardEl.innerHTML = '';
-      winLine.innerHTML = '';
+      winLineEl.innerHTML = '';
 
       state.board.forEach((cell, i) => {
         const div = document.createElement('div');
         div.className = 'cell' + (cell === 'X' ? ' x' : cell === 'O' ? ' o' : '');
         div.textContent = cell;
-        div.onclick = () => socket.emit('play', i);
+        div.onclick = () => {
+          if (state.currentPlayer === mySymbol && !state.winner && cell === '') {
+            socket.emit('play', i);
+          }
+        };
         boardEl.appendChild(div);
       });
 
       if (state.winner === 'draw') {
+        document.getElementById('timer-display').textContent = '';
         setTimeout(() => {
-          resultText.textContent = "Match nul !";
+          document.getElementById('result-text').textContent = 'Match nul !';
           showScreen('screen-end');
         }, 300);
       } else if (state.winner) {
-        const winningLine = findWinningLine(state.board);
-        if (winningLine) drawWinLine(winningLine);
+        document.getElementById('timer-display').textContent = '';
+        const wl = findWinningLine(state.board);
+        if (wl) drawWinLine(winLineEl, wl);
         setTimeout(() => {
-          const nomGagnant = state.winner === 'X' ? playerX : playerO;
-          resultText.textContent = `🎉 ${nomGagnant} a gagné !`;
+          document.getElementById('result-text').textContent =
+            state.winner === mySymbol ? 'Tu as gagné ! 🎉' : 'Tu as perdu...';
           showScreen('screen-end');
         }, 800);
       } else {
-        const nomJoueur = state.currentPlayer === 'X' ? playerX : playerO;
-        statusEl.textContent = `Tour de ${nomJoueur}`;
+        statusEl.textContent = state.currentPlayer === mySymbol ? 'À toi de jouer !' : "Tour de l'adversaire...";
       }
     });
+
+    socket.on('opponentWantsRematch', () => {
+      document.getElementById('rematch-status').textContent = "L'adversaire veut rejouer contre toi !";
+    });
+
+    socket.on('rematchDeclined', () => {
+      document.getElementById('rematch-status').textContent = "L'adversaire a choisi une autre option.";
+    });
+
+    socket.on('opponentLeft', () => {
+      document.getElementById('result-text').textContent = "Ton adversaire a quitté la partie.";
+      document.getElementById('timer-display').textContent = '';
+      showScreen('screen-end');
+    });
+
   </script>
 </body>
 </html>
